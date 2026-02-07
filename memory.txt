@@ -1,0 +1,70 @@
+Stack:
+
+The stack is a lifo data structure which means the last data stored in it is the first one out of it
+Stored in computer RAM just like the heap.
+Variables created on the stack will go out of scope and are automatically deallocated.
+Much faster to allocate in comparison to variables on the heap.
+Implemented with an actual stack data structure.
+Stores local data, return addresses, used for parameter passing.
+Can have a stack overflow when too much of the stack is used (mostly from infinite or too deep recursion, very large allocations).
+Data created on the stack can be used without pointers.
+You would use the stack if you know exactly how much data you need to allocate before compile time and it is not too big.
+Usually has a maximum size already determined when your program starts.
+
+Heap:
+
+Stored in computer RAM just like the stack.
+In C++, variables on the heap must be destroyed manually and never fall out of scope. The data is freed with delete, delete[], or free.
+Slower to allocate in comparison to variables on the stack.
+Used on demand to allocate a block of data for use by the program.
+Can have fragmentation when there are a lot of allocations and deallocations.
+In C++ or C, data created on the heap will be pointed to by pointers and allocated with new or malloc respectively.
+Can have allocation failures if too big of a buffer is requested to be allocated.
+You would use the heap if you don't know exactly how much data you will need at run time or if you need to allocate a lot of data.
+Responsible for memory leaks.
+
+1. Les Bus : Les autoroutes de l'information 🚌
+Un bus est un ensemble de liaisons physiques (des fils électriques sur la carte mère) qui permettent de transférer des données entre les composants d'un ordinateur (CPU, mémoire, périphériques).
+
+On distingue généralement trois types de bus :
+Le Bus de Données 📦 : Il transporte les informations réelles (le contenu d'une variable, une instruction de code).
+Le Bus d'Adresses 📍 : Il indique où envoyer la donnée (l'adresse mémoire en RAM). Plus ce bus est large (ex: 64 bits), plus l'ordinateur peut gérer une grande quantité de mémoire.
+Le Bus de Contrôle 🚦 : Il transporte les ordres (ex: "Lire", "Écrire", "Interrompre").
+
+2. La Hiérarchie de la Mémoire 🏔️
+Comme nous l'avons vu, la mémoire est organisée en pyramide. Plus on monte vers le CPU, plus c'est rapide, mais plus c'est petit et cher.
+Registres ⚡ : Directement dans le CPU. Vitesse instantanée.
+Mémoire Cache (L1, L2, L3) 🏎️ : Intégrée ou proche du CPU. Stocke ce qui est utilisé fréquemment.
+Mémoire Vive (RAM) 🧊 : Stockage temporaire pour les programmes en cours d'exécution.
+Stockage de masse (SSD/HDD) 📚 : Permanent, très lent par rapport au CPU.
+
+Le trajet de la donnée 🛤️
+Le Stockage (SSD/HDD) 💾 : Avant que vous ne lanciez le programme, le code compilé (binaire) et les données dorment sur le disque dur.
+La RAM (Mémoire vive) 🧊 : Quand vous lancez l'exécutable, le système d'exploitation charge les instructions en RAM. Une zone appelée Stack (Pile) est réservée pour les variables locales comme a et b.
+Le Cache 🏎️ : Le processeur anticipe et copie les valeurs de a et b depuis la RAM vers le Cache (L1/L2) pour y accéder plus vite.
+Les Registres ⚡ : Pour effectuer l'addition (a + b), le CPU transfère les valeurs du Cache vers ses Registres internes. C'est seulement ici que l'unité de calcul peut manipuler les nombres.
+
+un Dangling Pointer (un pointeur qui pointe vers du vide ou "n'importe quoi").
+
+Au niveau du matériel, un Segfault est un signal d'arrêt d'urgence envoyé par le processeur.
+
+La Mémoire Virtuelle et la MMU 🧠
+Ton programme ne parle jamais directement aux puces de RAM physiques. Il utilise des adresses virtuelles. Entre le processeur et la RAM, il y a un composant physique essentiel appelé la MMU (Memory Management Unit).
+
+Voici ce qui se passe lors d'une erreur :
+La Table des Pages 📖 : Le système d'exploitation crée une carte (une table) qui dit : "Le programme A a le droit d'accéder aux adresses de 100 à 200".
+La Requête ✋ : Ton processeur essaie d'exécuter une instruction comme MOV (déplacer une donnée) vers une adresse interdite (par exemple l'adresse 0, ou une adresse appartenant à un autre programme).
+Le Verdict de la MMU ❌ : La MMU vérifie la table. Si l'adresse n'est pas répertoriée ou si les droits (lecture/écriture) ne correspondent pas, elle bloque l'accès instantanément.
+L'Exception Matérielle ⚡ : La MMU envoie une "exception" au processeur. Le processeur arrête tout et passe la main au noyau (Kernel) du système d'exploitation, qui envoie alors le signal SIGSEGV à ton programme pour le tuer proprement avant qu'il ne corrompe les données des autres.
+Pourquoi c'est une protection vitale ? 🛡️
+Sans ce mécanisme matériel, si ton programme faisait une erreur, il pourrait aller écrire par accident dans la mémoire du système d'exploitation ou d'un autre logiciel (comme ton navigateur web), ce qui ferait planter tout l'ordinateur.
+
+Pour bien visualiser cela, on peut regarder deux causes matérielles fréquentes :
+L'accès hors limites : Ton pointeur pointe vers une zone qui n'a jamais été "mappée" (allouée) par la MMU.
+La violation de droits : Tu essaies d'écrire dans une zone marquée comme "Lecture seule" (comme la zone où est stocké le code même de ton programme).
+
+1. Le Core Dump (La boîte noire) 📂
+Oui, tu peux l'ouvrir ! Sous Linux, on utilise souvent un outil appelé gdb (GNU Debugger).
+Quand tu lances gdb mon_programme core, le débogueur te place exactement à l'endroit où ça a cassé.
+Tu peux taper une commande comme backtrace pour voir la liste des fonctions qui étaient en cours d'exécution.
+C'est magique car cela t'évite de chercher des heures avec des printf.
