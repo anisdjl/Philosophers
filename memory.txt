@@ -68,3 +68,33 @@ Oui, tu peux l'ouvrir ! Sous Linux, on utilise souvent un outil appelé gdb (GNU
 Quand tu lances gdb mon_programme core, le débogueur te place exactement à l'endroit où ça a cassé.
 Tu peux taper une commande comme backtrace pour voir la liste des fonctions qui étaient en cours d'exécution.
 C'est magique car cela t'évite de chercher des heures avec des printf.
+
+I. La Hiérarchie et la Circulation des Données
+Tout commence par la structure de la mémoire, organisée en pyramide pour équilibrer vitesse et capacité. Au sommet, on trouve les Registres, situés dans le CPU, qui traitent les données instantanément (1 cycle). Juste en dessous, le Cache (L1, L2, L3) sert de zone tampon pour anticiper les besoins du processeur. Plus bas, la RAM stocke les programmes en cours, et enfin le SSD assure le stockage permanent.
+
+Pour que ces composants communiquent, l'ordinateur utilise des Bus :
+Le Bus de Données transporte les valeurs (le "quoi").
+Le Bus d'Adresses indique l'emplacement (le "où").
+Le Bus de Contrôle envoie les ordres comme "Lecture" ou "Écriture" (le "comment").
+II. L'Organisation de la Mémoire en C (Stack vs Heap)
+Lorsqu'un programme s'exécute, il segmente sa mémoire virtuelle en plusieurs zones :
+La Stack (Pile) 🥞 : Elle gère les variables locales de manière automatique via des Stack Frames. C'est une structure LIFO (Dernier Entré, Premier Sorti). Si une fonction s'appelle à l'infini, elle dépasse sa zone réservée, créant un Stack Overflow.
+La Heap (Tas) 🏗️ : C'est l'espace pour l'allocation dynamique avec malloc(). Ici, c'est au programmeur de libérer la mémoire avec free().
+Le Segment de Données : Contient les variables globales et les constantes (comme les chaînes de caractères en lecture seule, le .rodata).
+III. Le Mécanisme du Segmentation Fault (Aspect Matériel)
+Le Segfault n'est pas qu'une erreur logicielle, c'est une intervention de la sécurité matérielle. Chaque programme manipule des adresses virtuelles (une illusion créée par l'OS). Pour accéder à la vraie RAM, il doit passer par la MMU (Memory Management Unit), un composant physique du processeur.
+
+La MMU consulte une Table des Pages (fournie par l'OS) qui contient les droits d'accès. Le crash survient dans trois cas principaux :
+Adresse inexistante : Tu essaies d'accéder à une adresse qui n'est pas mappée dans la table (ex: déréférencer un pointeur NULL).
+Violation de droits : Tu essaies d'écrire dans une zone marquée "Lecture seule" (comme modifier une chaîne constante).
+Dépassement de segment : Tu sors des limites de ta "bulle" de mémoire virtuelle.
+Lorsque la MMU détecte l'infraction, elle lève une exception matérielle. Le CPU s'arrête et passe le relais au noyau du système d'exploitation, qui envoie le signal SIGSEGV pour tuer le processus.
+
+IV. Diagnostics et Concepts Avancés
+Pour comprendre un crash, on utilise le Core Dump, une copie conforme de la RAM et des registres au moment fatidique, que l'on analyse avec un débogueur comme gdb.
+
+Nous avons aussi vu deux variantes critiques :
+Le Bus Error (SIGBUS) 📏 : Souvent dû à un problème d'alignement mémoire. Le CPU refuse de lire une donnée si elle n'est pas placée sur une adresse multiple de sa taille (ex: un int de 4 octets commençant à une adresse impaire).
+Le Buffer Overflow 🚩 : C'est une faille où l'on écrit plus de données que prévu dans un tableau sur la Stack. Cela permet d'écraser l'adresse de retour de la fonction pour détourner le CPU vers du code malveillant. Pour contrer cela, le matériel utilise le NX Bit (No-Execute), empêchant l'exécution de code dans les zones de données.
+V. La Mémoire Virtuelle et le Swap
+Enfin, la mémoire virtuelle permet d'utiliser le SSD comme extension de la RAM. Si la RAM est pleine, l'OS déplace des pages de données vers le disque (Swap). Cela évite le crash immédiat mais ralentit énormément l'ordinateur car le bus vers le SSD est bien plus lent que celui vers la RAM.
