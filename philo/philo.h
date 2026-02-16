@@ -6,7 +6,7 @@
 /*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 14:23:29 by adjelili          #+#    #+#             */
-/*   Updated: 2026/02/16 11:12:14 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/02/16 13:02:19 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,10 @@ typedef struct s_params
 	int		notepme;
 	t_philo	*philo;
 }	t_params;
+
+int		ft_isdigit(int c);
+int		test_num(int argc, char **argv);
+int		ft_atoi(const char *nptr);
+void	init_struct(t_params *params, int argc, char **argv);
 
 #endif

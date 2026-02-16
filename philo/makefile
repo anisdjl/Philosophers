@@ -6,15 +6,16 @@
 #    By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/14 14:17:57 by adjelili          #+#    #+#              #
-#    Updated: 2026/02/14 14:23:16 by adjelili         ###   ########.fr        #
+#    Updated: 2026/02/16 12:53:37 by adjelili         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -pthread
+CFLAGS = -g -Wall -Werror -Wextra -pthread
 NAME = philo
 
-SRC = 
+SRC = philo.c \
+	  utils.c
 
 OBJ = $(SRC:.c=.o)
 
