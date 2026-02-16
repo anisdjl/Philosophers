@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anis <anis@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 14:25:04 by adjelili          #+#    #+#             */
-/*   Updated: 2026/02/16 12:38:48 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/02/16 18:16:35 by anis             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ int main(int argc, char **argv)
 	t_params	*params;
 
 	if (argc < 5 || argc > 6)
+	{
+		printf("Wrong number of args\n");
 		return (0);
+	}
 	if (!test_num(argc, argv))
 		return (0);
 	params = malloc(sizeof(t_params));

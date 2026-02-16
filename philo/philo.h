@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anis <anis@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 14:23:29 by adjelili          #+#    #+#             */
-/*   Updated: 2026/02/16 13:02:19 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/02/16 18:04:00 by anis             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,6 @@ int		ft_isdigit(int c);
 int		test_num(int argc, char **argv);
 int		ft_atoi(const char *nptr);
 void	init_struct(t_params *params, int argc, char **argv);
+int		test_digit(int argc, char **argv);
 
 #endif
