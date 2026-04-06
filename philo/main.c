@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 14:25:04 by adjelili          #+#    #+#             */
-/*   Updated: 2026/04/06 17:26:56 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/04/06 17:28:44 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ int main(int argc, char **argv)
 	t_params	*params;
 
 	if (argc < 5 || argc > 6)
+	{
+		printf("Wrong number of args\n");
 		return (0);
+	}
 	if (!test_num(argc, argv))
 		return (0);
 	params = ft_malloc(1, sizeof(t_params));

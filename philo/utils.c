@@ -6,7 +6,7 @@
 /*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 12:23:54 by adjelili          #+#    #+#             */
-/*   Updated: 2026/04/06 15:45:03 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/04/06 17:28:35 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,27 @@
 
 int	ft_isdigit(int c)
 {
-	return (c >= 48 && c <= 57);
+	return (c >= '0' && c <= '9');
+}
+
+int	test_digit(int argc, char **argv)
+{
+	int	y;
+	int	a;
+
+	y = 1;
+	while (y < argc)
+	{
+		a = 0;
+		while (argv[y][a])
+		{
+			if (!ft_isdigit((argv[y][a])))
+				return (0);
+			a++;
+		}
+		y++;
+	}
+	return (1);
 }
 
 int	test_num(int argc, char **argv)
@@ -24,7 +44,7 @@ int	test_num(int argc, char **argv)
 	i = 1;
 	while (i < argc)
 	{
-		if (ft_isdigit(ft_atoi(argv[i])) || ft_atoi(argv[i]) <= 0)
+		if (!test_digit(argc, argv) || ft_atoi(argv[i]) <= 0)
 		{
 			printf("invalid arguments\n");	
 			return (0);
