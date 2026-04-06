@@ -6,7 +6,7 @@
 #    By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/14 14:17:57 by adjelili          #+#    #+#              #
-#    Updated: 2026/02/16 12:53:37 by adjelili         ###   ########.fr        #
+#    Updated: 2026/04/06 17:11:40 by adjelili         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,9 @@ CFLAGS = -g -Wall -Werror -Wextra -pthread
 NAME = philo
 
 SRC = philo.c \
-	  utils.c
+	  utils.c \
+	  gc1.c \
+	  gc2.c
 
 OBJ = $(SRC:.c=.o)
 

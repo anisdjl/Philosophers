@@ -1,27 +1,45 @@
 #include <stdio.h>
 #include <pthread.h>
 
-void*	routine()
+typedef struct s_data
 {
-	printf("testing threads\n");
-	return NULL;
+    int             counter;
+    pthread_mutex_t mutex;
+}   t_data;
+
+void    *increment(void *arg)
+{
+    t_data  *data = (t_data *)arg;
+    int     i;
+
+    i = 0;
+    while (i < 10000)
+    {
+        pthread_mutex_lock(&data->mutex);    // Verrouille
+        data->counter++;                     // Section critique
+        pthread_mutex_unlock(&data->mutex);  // Déverrouille
+        i++;
+    }
+    return (NULL);
 }
+
 int main(void)
 {
-	pthread_t t1; // thread struct
-	pthread_t t2;
+    t_data      data;
+    pthread_t   t1;
+    pthread_t   t2;
 
-	if (pthread_create(&t2, NULL, &routine, NULL )!= 0)
-	{
-		printf("error while creating the thread\n");
-		return (1);
-	}
-	if (pthread_create(&t1, NULL, &routine, NULL) != 0)
-	{
-		printf("error while creating the thread\n");
-		return (1);
-	} // cree les threads
-	pthread_join(t1, NULL); // wait for the thread to finish its execution
-	pthread_join(t2, NULL); // wait for the thread to finish its execution
-	return 0;
+    data.counter = 0;
+    pthread_mutex_init(&data.mutex, NULL);
+
+    pthread_create(&t1, NULL, increment, &data);
+    pthread_create(&t2, NULL, increment, &data);
+
+    pthread_join(t1, NULL);
+    pthread_join(t2, NULL);
+
+    printf("Counter = %d (attendu : 20000)\n", data.counter);
+
+    pthread_mutex_destroy(&data.mutex);
+    return (0);
 }
