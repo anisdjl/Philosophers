@@ -6,7 +6,7 @@
 /*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 14:25:04 by adjelili          #+#    #+#             */
-/*   Updated: 2026/04/06 17:28:44 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/04/07 12:29:06 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 int main(int argc, char **argv)
 {
 	t_params	*params;
+	t_philo		**philos;
 
+	philos = NULL;
 	if (argc < 5 || argc > 6)
 	{
 		printf("Wrong number of args\n");
@@ -26,26 +28,34 @@ int main(int argc, char **argv)
 	params = ft_malloc(1, sizeof(t_params));
 	init_struct(params, argc, argv);
 	init_mutex(params);
-	
-	wait_all_threads(params);
+	init_philo(params, philos);
+	//pthread_create(params->tab_of_philo[y]->thread, NULL, &init_forks, &params->tab_of_philo[y]); dans une fonction launch threads + launch the thread supervisor
+	//wait_all_threads(params);
 	ft_free_all_malloc();
-	//init_philo(params);
+	return (0);
 }
 
-void	init_philo(t_params *params)
+void	init_philo(t_params *params, t_philo **philos)
 {
 	int y;
 
 	y = 0;
-	params->tab_of_philo = ft_malloc(1, sizeof(pthread_t *) * params->nb_philo);
+	philos = ft_malloc(1, sizeof(t_philo *) * params->nb_philo);
 	while (y < params->nb_philo)
 	{
-		params->tab_of_philo[y] = ft_malloc(1, sizeof(pthread_t));
-		pthread_create(params->tab_of_philo[y]->thread, NULL, NULL, NULL);
-		params->tab_of_philo[y]->id = y + 1;
-		// init_forks(params, y);
+		philos[y] = ft_malloc(1, sizeof(t_philo));
+		philos[y]->id = y + 1;
+		init_forks(philos[y], params);
+		philos[y]->params = params;
+		printf("The philo number %d has the fork number %d at his left and the fork number %d at his right\n", y, y, (y + 1) % params->nb_philo);
 		y++;
 	}
+}
+
+void	init_forks(t_philo *philo, t_params *params)
+{
+	philo->left_fork = params->tab_of_mutex[philo->id - 1];
+	philo->right_fork = params->tab_of_mutex[(philo->id) % params->nb_philo];
 }
 
 void	init_mutex(t_params *params)
@@ -80,5 +90,10 @@ void	init_struct(t_params *params, int argc, char **argv)
 	if (argc == 6)
 		params->notepme = ft_atoi(argv[5]);
 	else
-		params->notepme = -1; // je le mets a -1 comme ca je pourrais chcecker si il y a un notepme sino nje n'arrete pas la simulation 
+		params->notepme = -1; // je le mets a -1 comme ca je pourrais chcecker si il y a un notepme sino nje n'arrete pas la simulation
+	if (pthread_mutex_init(&params->mutex_log, NULL) != 0)
+	{
+		ft_free_all_malloc();
+		exit(EXIT_FAILURE);
+	}
 }

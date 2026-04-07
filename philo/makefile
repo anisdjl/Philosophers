@@ -6,7 +6,7 @@
 #    By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/14 14:17:57 by adjelili          #+#    #+#              #
-#    Updated: 2026/04/06 17:28:55 by adjelili         ###   ########.fr        #
+#    Updated: 2026/04/07 11:02:51 by adjelili         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ CC = cc
 CFLAGS = -g -Wall -Werror -Wextra -pthread
 NAME = philo
 
-SRC = philo.c \
+SRC = main.c \
 	  utils.c \
 	  gc1.c \
 	  gc2.c

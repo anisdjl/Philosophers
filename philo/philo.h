@@ -6,7 +6,7 @@
 /*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 14:23:29 by adjelili          #+#    #+#             */
-/*   Updated: 2026/04/06 17:28:25 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/04/07 12:19:43 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ typedef struct s_params
 	pthread_mutex_t	**tab_of_mutex;
 	pthread_mutex_t	mutex_log;
 	pthread_t		thread_supervisor;
-	t_philo			**tab_of_philo;
 }	t_params;
 
 typedef struct s_philo
@@ -49,6 +48,7 @@ int		test_num(int argc, char **argv);
 int		ft_atoi(const char *nptr);
 void	init_struct(t_params *params, int argc, char **argv);
 void	init_mutex(t_params *params);
-void	init_philo(t_params *params);
+void	init_philo(t_params *params, t_philo **philos);
+void	init_forks(t_philo *philo, t_params *params);
 
 #endif
