@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anis <anis@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 14:25:04 by adjelili          #+#    #+#             */
-/*   Updated: 2026/04/07 12:29:06 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/04/09 14:17:29 by anis             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int main(int argc, char **argv)
 	init_struct(params, argc, argv);
 	init_mutex(params);
 	init_philo(params, philos);
-	//pthread_create(params->tab_of_philo[y]->thread, NULL, &init_forks, &params->tab_of_philo[y]); dans une fonction launch threads + launch the thread supervisor
+	launch_threads(philos, params);
+	launch_supervisor(params);
 	//wait_all_threads(params);
 	ft_free_all_malloc();
 	return (0);
@@ -49,6 +50,11 @@ void	init_philo(t_params *params, t_philo **philos)
 		philos[y]->params = params;
 		printf("The philo number %d has the fork number %d at his left and the fork number %d at his right\n", y, y, (y + 1) % params->nb_philo);
 		y++;
+		if (pthread_mutex_init(&philos[y]->last_meal, NULL) != 0)
+		{
+			ft_free_all_malloc();
+			exit(EXIT_FAILURE);
+		}
 	}
 }
 
@@ -96,4 +102,5 @@ void	init_struct(t_params *params, int argc, char **argv)
 		ft_free_all_malloc();
 		exit(EXIT_FAILURE);
 	}
+	params->death = 0;
 }
