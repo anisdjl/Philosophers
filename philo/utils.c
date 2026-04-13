@@ -6,7 +6,7 @@
 /*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 12:23:54 by adjelili          #+#    #+#             */
-/*   Updated: 2026/04/06 17:28:35 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/04/13 16:40:14 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,13 @@ int	ft_atoi(const char *nptr)
 		y++;
 	}
 	return (total * sign);
+}
+
+int	ft_usleep(int time_to_sleep)
+{
+	while() // ici on mettra les 
+	{
+
+	}
+	return (0);
 }

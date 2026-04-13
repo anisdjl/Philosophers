@@ -1,31 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gc.h                                               :+:      :+:    :+:   */
+/*   supervisor.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/24 15:20:13 by adjelili          #+#    #+#             */
-/*   Updated: 2026/04/13 16:40:47 by adjelili         ###   ########.fr       */
+/*   Created: 2026/04/13 14:52:29 by adjelili          #+#    #+#             */
+/*   Updated: 2026/04/13 14:54:21 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GC_H
-# define GC_H
+#include "philo.h"
 
-# include "philo.h"
-
-typedef struct s_list
+void	supervisor(void *arg)
 {
-	void			*content;
-	struct s_list	*next;
-}					t_list;
+	t_params *params;
 
-void				ft_lstadd_back_gc(t_list **lst, t_list *new_node);
-void				*ft_calloc_gc(size_t nmemb, size_t size);
-t_list				*ft_lstnew_gc(void *content);
-void				*ft_malloc(size_t nmemb, size_t size);
-void				ft_free_malloc(void *ptr);
-void				ft_free_all_malloc(void);
-
-#endif
+	params = (t_params *)arg;
+	
+	
+}

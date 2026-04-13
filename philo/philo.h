@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anis <anis@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 14:23:29 by adjelili          #+#    #+#             */
-/*   Updated: 2026/04/09 14:34:00 by anis             ###   ########.fr       */
+/*   Updated: 2026/04/13 16:41:59 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_params
 	int				time_to_sleep;
 	int				notepme;
 	int				death;
+	t_philo			**tab_of_philo;
 	pthread_mutex_t	**tab_of_mutex;
 	pthread_mutex_t	mutex_log;
 	pthread_t		thread_supervisor; // pour verifier que tout le monde est vivant, ou si un philo est ☠️
@@ -54,5 +55,12 @@ void	init_struct(t_params *params, int argc, char **argv);
 void	init_mutex(t_params *params);
 void	init_philo(t_params *params, t_philo **philos);
 void	init_forks(t_philo *philo, t_params *params);
+void	supervisor(void *arg);
+int		get_time_of_day_ms(void);
+int		time_last_meal(int time, t_philo *philo);
+int		ft_usleep(int time_to_sleep);
+void	launch_threads(t_philo **philo, t_params *params);
+void	algo(void *arg);
+int		not_dead(t_philo *philo, t_params *params);
 
 #endif

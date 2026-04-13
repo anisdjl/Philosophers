@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anis <anis@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 14:25:04 by adjelili          #+#    #+#             */
-/*   Updated: 2026/04/09 14:17:29 by anis             ###   ########.fr       */
+/*   Updated: 2026/04/13 15:56:23 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	init_philo(t_params *params, t_philo **philos)
 			exit(EXIT_FAILURE);
 		}
 	}
+	params->tab_of_philo = philos;
 }
 
 void	init_forks(t_philo *philo, t_params *params)
