@@ -6,7 +6,7 @@
 /*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 12:23:54 by adjelili          #+#    #+#             */
-/*   Updated: 2026/04/13 16:40:14 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/04/13 18:01:34 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,18 @@ int	ft_atoi(const char *nptr)
 	return (total * sign);
 }
 
-int	ft_usleep(int time_to_sleep)
+int	ft_usleep(int time_to_sleep, t_philo *philo)
 {
-	while() // ici on mettra les 
+	while() // ici on mettra les calcul pour sacoir combien il doit dormir
 	{
-
+		pthread_mutex_lock(&philo->params->read_flag_death);
+		if (philo->params->death == 1)
+		{
+			pthread_mutex_unlock(&philo->params->read_flag_death);	
+			return (1);
+		}
+		pthread_mutex_unlock(&philo->params->read_flag_death);
+		usleep(500); // faut pas laisser les 500 c'est pas bon 
 	}
 	return (0);
 }

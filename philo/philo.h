@@ -6,7 +6,7 @@
 /*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 14:23:29 by adjelili          #+#    #+#             */
-/*   Updated: 2026/04/13 16:41:59 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/04/13 17:41:00 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_params
 	int				notepme;
 	int				death;
 	t_philo			**tab_of_philo;
+	pthread_mutex_t	read_flag_death;
 	pthread_mutex_t	**tab_of_mutex;
 	pthread_mutex_t	mutex_log;
 	pthread_t		thread_supervisor; // pour verifier que tout le monde est vivant, ou si un philo est ☠️
