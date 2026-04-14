@@ -6,7 +6,7 @@
 #    By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/14 14:17:57 by adjelili          #+#    #+#              #
-#    Updated: 2026/04/07 11:02:51 by adjelili         ###   ########.fr        #
+#    Updated: 2026/04/14 14:58:38 by adjelili         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,10 @@ NAME = philo
 SRC = main.c \
 	  utils.c \
 	  gc1.c \
-	  gc2.c
+	  gc2.c \
+	  algo.c \
+	  time.c \
+	  supervisor.c
 
 OBJ = $(SRC:.c=.o)
 

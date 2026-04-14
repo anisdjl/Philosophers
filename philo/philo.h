@@ -6,7 +6,7 @@
 /*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 14:23:29 by adjelili          #+#    #+#             */
-/*   Updated: 2026/04/13 17:41:00 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/04/14 18:03:48 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ typedef struct s_params
 	int				time_to_sleep;
 	int				notepme;
 	int				death;
-	t_philo			**tab_of_philo;
+	t_philo			*tab_of_philo;
 	pthread_mutex_t	read_flag_death;
-	pthread_mutex_t	**tab_of_mutex;
+	pthread_mutex_t	*tab_of_mutex;
 	pthread_mutex_t	mutex_log;
 	pthread_t		thread_supervisor; // pour verifier que tout le monde est vivant, ou si un philo est ☠️
 }	t_params;
@@ -45,8 +45,9 @@ typedef struct s_philo
 	pthread_mutex_t	*right_fork; // mutex qu'on lock pour prendre la fourchette
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t last_meal; // mutex pour lire et ecrire l'heure du dernier repas
-	pthread_t	*thread;
+	pthread_t	thread;
 	t_params	*params;
+	int			number_of_meal;
 }	t_philo;
 
 int		ft_isdigit(int c);
@@ -55,13 +56,14 @@ int		ft_atoi(const char *nptr);
 void	init_struct(t_params *params, int argc, char **argv);
 void	init_mutex(t_params *params);
 void	init_philo(t_params *params, t_philo **philos);
-void	init_forks(t_philo *philo, t_params *params);
-void	supervisor(void *arg);
+void	init_forks(t_philo philo, t_params *params);
+void	*supervisor(void *arg);
 int		get_time_of_day_ms(void);
 int		time_last_meal(int time, t_philo *philo);
-int		ft_usleep(int time_to_sleep);
-void	launch_threads(t_philo **philo, t_params *params);
-void	algo(void *arg);
+int		ft_usleep(int time_to_sleep, t_philo *philo);
+void	launch_threads(t_philo *philo, t_params *params);
+void	*algo(void *arg);
 int		not_dead(t_philo *philo, t_params *params);
+void	wait_all_threads(t_params *params, t_philo *philo);
 
 #endif
