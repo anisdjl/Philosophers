@@ -6,7 +6,7 @@
 /*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 11:18:33 by anis              #+#    #+#             */
-/*   Updated: 2026/04/14 17:07:17 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/04/14 18:22:00 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,31 @@ void	launch_threads(t_philo *philo, t_params *params)
 void	*algo(void *arg)
 {
 	t_philo	*philo;
-	// int		status;
+	int		status;
 	
 	philo = (t_philo *)arg;
 	printf("thread number launched\n");
 	
-	// while (1)
-	// {
-	// 	if (!not_dead(philo, philo->params) || philo->number_of_meal == philo->params->notepme)
-	// 		break ;
-	// 	pthread_mutex_lock(philo->left_fork);
-	// 	status = ft_usleep(philo->params->time_to_eat, philo);
-	// 	pthread_mutex_unlock(philo->left_fork); // update le temps du last meal
-	// 	if (status == 0)
-	// 	{
-	// 		philo->time_lm = get_time_of_day_ms();
-	// 		ft_usleep(philo->params->time_to_sleep, philo);
-	// 	}
-	// 	else
-	// 		break;
-	// 	philo->number_of_meal++;
-	// }
+	while (1)
+	{
+		if (!not_dead(philo, philo->params) || philo->number_of_meal == philo->params->notepme)
+			break ;
+		update_last_meal(philo);
+		pthread_mutex_lock(philo->left_fork);
+		status = ft_usleep(philo->params->time_to_eat, philo);
+		pthread_mutex_unlock(philo->left_fork); // update le temps du last meal
+		if (status == 0)
+			ft_usleep(philo->params->time_to_sleep, philo);
+		else
+			break;
+		philo->number_of_meal++;
+	}
 	return NULL; // pas sur de laisser ca ici
+}
+
+void	update_last_meal(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->last_meal);
+	philo->time_lm = get_time_of_day_ms();
+	pthread_mutex_unlock(&philo->last_meal);
 }
