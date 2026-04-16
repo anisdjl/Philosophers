@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anis <anis@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 14:23:29 by adjelili          #+#    #+#             */
-/*   Updated: 2026/04/14 18:03:48 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/04/16 23:11:07 by anis             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ typedef struct s_philo t_philo;
 typedef struct s_params
 {
 	int				nb_philo;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
+	long			time_to_die;
+	long			time_to_eat;
+	long			time_to_sleep;
 	int				notepme;
 	int				death;
 	t_philo			*tab_of_philo;
@@ -41,7 +41,7 @@ typedef struct s_params
 typedef struct s_philo
 {
 	int	id;
-	int	time_lm; // heure du dernier repas
+	long	time_lm; // heure du dernier repas
 	pthread_mutex_t	*right_fork; // mutex qu'on lock pour prendre la fourchette
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t last_meal; // mutex pour lire et ecrire l'heure du dernier repas
@@ -56,14 +56,17 @@ int		ft_atoi(const char *nptr);
 void	init_struct(t_params *params, int argc, char **argv);
 void	init_mutex(t_params *params);
 void	init_philo(t_params *params, t_philo **philos);
-void	init_forks(t_philo philo, t_params *params);
+void	init_forks(t_philo *philo, t_params *params);
 void	*supervisor(void *arg);
-int		get_time_of_day_ms(void);
-int		time_last_meal(int time, t_philo *philo);
+long	get_time_of_day_ms(void);
+long	time_last_meal(int time, t_philo *philo);
 int		ft_usleep(int time_to_sleep, t_philo *philo);
 void	launch_threads(t_philo *philo, t_params *params);
 void	*algo(void *arg);
 int		not_dead(t_philo *philo, t_params *params);
 void	wait_all_threads(t_params *params, t_philo *philo);
+void	update_last_meal(t_philo *philo);
+int		odd_philos(t_philo *philo);
+int		even_philos(t_philo *philo);
 
 #endif

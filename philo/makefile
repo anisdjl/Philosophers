@@ -3,15 +3,16 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+         #
+#    By: anis <anis@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/14 14:17:57 by adjelili          #+#    #+#              #
-#    Updated: 2026/04/14 14:58:38 by adjelili         ###   ########.fr        #
+#    Updated: 2026/04/16 13:39:10 by anis             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -g -Wall -Werror -Wextra -pthread
+CFLAGS = -g -Wall -Werror -Wextra
+LDFLAGS=-fsanitize=thread
 NAME = philo
 
 SRC = main.c \

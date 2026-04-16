@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anis <anis@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 14:25:04 by adjelili          #+#    #+#             */
-/*   Updated: 2026/04/14 18:03:53 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/04/16 23:50:25 by anis             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,33 +39,37 @@ int main(int argc, char **argv)
 void	init_philo(t_params *params, t_philo **philos)
 {
 	int y;
+	long	start_time;
 
 	y = 0;
+	start_time = get_time_of_day_ms();
 	*philos = ft_malloc(1, sizeof(t_philo) * params->nb_philo);
-	printf("nb of philo %d\n", params->nb_philo);
+	// printf("nb of philo %d\n", params->nb_philo);
 	while (y < params->nb_philo)
 	{
 		//philos[y] = ft_malloc(1, sizeof(t_philo));
 		(*philos)[y].id = y + 1;
-		init_forks((*philos)[y], params);
+		init_forks((*philos + y), params);
 		(*philos)[y].params = params;
-		printf("The philo number %d has the fork number %d at his left and the fork number %d at his right\n", y, y, (y + 1) % params->nb_philo);
+		// printf("The philo number %d has the fork number %d at his left and the fork number %d at his right\n", y, y, (y + 1) % params->nb_philo);
 		if (pthread_mutex_init(&(*philos)[y].last_meal, NULL) != 0)
 		{
 			ft_free_all_malloc();
 			exit(EXIT_FAILURE);
 		}
+		printf("right fork: %p | left fork: %p\n", (*philos)[y].right_fork, (*philos)[y].left_fork);
 		(*philos)[y].number_of_meal = 0;
+		(*philos)[y].time_lm = start_time;
 		y++;
-		printf("%d\n", y);
+		// printf("%d\n", y);
 	}
 	params->tab_of_philo = *philos;
 }
 
-void	init_forks(t_philo philo, t_params *params)
+void	init_forks(t_philo *philo, t_params *params)
 {
-	philo.left_fork = &params->tab_of_mutex[philo.id - 1];
-	philo.right_fork = &params->tab_of_mutex[(philo.id) % params->nb_philo];
+	philo->left_fork = &params->tab_of_mutex[philo->id - 1];
+	philo->right_fork = &params->tab_of_mutex[(philo->id) % params->nb_philo];
 }
 
 void	init_mutex(t_params *params)
@@ -90,13 +94,13 @@ void	init_mutex(t_params *params)
 void	init_struct(t_params *params, int argc, char **argv)
 {
 	params->nb_philo = ft_atoi(argv[1]);
-	printf("%d\n", params->nb_philo);
+	// printf("%d\n", params->nb_philo);
 	params->time_to_die = ft_atoi(argv[2]);
-	printf("%d\n", params->time_to_die);
+	// printf("%d\n", params->time_to_die);
 	params->time_to_eat = ft_atoi(argv[3]);
-	printf("%d\n", params->time_to_eat);
+	// printf("%d\n", params->time_to_eat);
 	params->time_to_sleep = ft_atoi(argv[4]);
-	printf("%d\n", params->time_to_sleep);
+	// printf("%d\n", params->time_to_sleep);
 	if (argc == 6)
 		params->notepme = ft_atoi(argv[5]);
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   supervisor.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anis <anis@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 14:52:29 by adjelili          #+#    #+#             */
-/*   Updated: 2026/04/14 15:37:01 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/04/16 23:18:36 by anis             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,27 @@ void	*supervisor(void *arg)
 
 	y = 0;
 	params = (t_params *)arg;
-	while (y < params->nb_philo)
+	while (1)
 	{
-		if (params->tab_of_philo[y].time_lm - get_time_of_day_ms() > params->time_to_die)
+		y = 0;
+		while (y < params->nb_philo)
 		{
-			pthread_mutex_lock(&params->read_flag_death);
-			params->death = 1;
-			pthread_mutex_unlock(&params->read_flag_death);
+			pthread_mutex_lock(&params->tab_of_philo[y].last_meal);
+			printf("Debug: Philo %d | Now: %ld | Last: %ld | Diff: %ld\n", 
+    		y + 1, get_time_of_day_ms(), params->tab_of_philo[y].time_lm, 
+    		get_time_of_day_ms() - params->tab_of_philo[y].time_lm);
+			if (get_time_of_day_ms() - params->tab_of_philo[y].time_lm > params->time_to_die)
+			{
+				pthread_mutex_lock(&params->read_flag_death);
+				params->death = 1;
+				pthread_mutex_unlock(&params->read_flag_death);
+				printf("%ld: philo number %d is dead dans le supervisor\n", get_time_of_day_ms(), y + 1);
+				return NULL;
+			}
+			pthread_mutex_unlock(&params->tab_of_philo[y].last_meal);
+			y++;
 		}
-		y++;
+		// usleep(1000);
 	}
 	return NULL;
 }
