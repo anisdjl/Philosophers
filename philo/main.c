@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anis <anis@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 14:25:04 by adjelili          #+#    #+#             */
-/*   Updated: 2026/04/16 23:50:25 by anis             ###   ########.fr       */
+/*   Updated: 2026/04/17 16:14:39 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	init_philo(t_params *params, t_philo **philos)
 			ft_free_all_malloc();
 			exit(EXIT_FAILURE);
 		}
-		printf("right fork: %p | left fork: %p\n", (*philos)[y].right_fork, (*philos)[y].left_fork);
+		//printf("right fork: %p | left fork: %p\n", (*philos)[y].right_fork, (*philos)[y].left_fork);
 		(*philos)[y].number_of_meal = 0;
 		(*philos)[y].time_lm = start_time;
 		y++;
@@ -110,5 +110,6 @@ void	init_struct(t_params *params, int argc, char **argv)
 		ft_free_all_malloc();
 		exit(EXIT_FAILURE);
 	}
+	params->start_time = get_time_of_day_ms();
 	params->death = 0;
 }

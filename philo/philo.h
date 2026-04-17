@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anis <anis@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 14:23:29 by adjelili          #+#    #+#             */
-/*   Updated: 2026/04/16 23:11:07 by anis             ###   ########.fr       */
+/*   Updated: 2026/04/17 17:38:01 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,21 @@ typedef struct s_params
 	long			time_to_sleep;
 	int				notepme;
 	int				death;
+	long			start_time;
 	t_philo			*tab_of_philo;
 	pthread_mutex_t	read_flag_death;
 	pthread_mutex_t	*tab_of_mutex;
 	pthread_mutex_t	mutex_log;
-	pthread_t		thread_supervisor; // pour verifier que tout le monde est vivant, ou si un philo est ☠️
+	pthread_t		thread_supervisor;
 }	t_params;
 
 typedef struct s_philo
 {
 	int	id;
-	long	time_lm; // heure du dernier repas
-	pthread_mutex_t	*right_fork; // mutex qu'on lock pour prendre la fourchette
+	long	time_lm;
+	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*left_fork;
-	pthread_mutex_t last_meal; // mutex pour lire et ecrire l'heure du dernier repas
+	pthread_mutex_t last_meal;
 	pthread_t	thread;
 	t_params	*params;
 	int			number_of_meal;
