@@ -6,7 +6,7 @@
 /*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 11:18:33 by anis              #+#    #+#             */
-/*   Updated: 2026/04/17 17:53:31 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/04/19 13:51:37 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,17 @@ void	*algo(void *arg)
 			status = even_philos(philo);
 		else
 			status = odd_philos(philo);
-		if (status == 0)
+		if (status == 0 && not_dead(philo, philo->params))
 		{
-			printf("%ld: philo number %d is sleeping\n", get_time_of_day_ms() - philo->params->start_time, philo->id);
+			writer(philo, 1);
 			ft_usleep(philo->params->time_to_sleep, philo);
 		}
 		else
 			break;
+		if (!not_dead(philo, philo->params))
+			break ;
 		ft_usleep(((philo->params->time_to_die - (philo->params->time_to_eat + philo->params->time_to_sleep)) / 2), philo);
-		printf("%ld: philo number %d is thinking\n", get_time_of_day_ms() - philo->params->start_time, philo->id);
+		writer(philo, 2);
 		philo->number_of_meal++;
 	}
 	return NULL;
@@ -67,10 +69,12 @@ int	odd_philos(t_philo *philo)
 {
 	int status;
 
+	if (!not_dead(philo, philo->params))
+		return (1);
 	pthread_mutex_lock(philo->left_fork);
 	pthread_mutex_lock(philo->right_fork);
 	update_last_meal(philo);
-	printf("%ld: philo number %d is eating\n", get_time_of_day_ms() - philo->params->start_time, philo->id);
+	writer(philo, 0);
 	status = ft_usleep(philo->params->time_to_eat, philo);
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
@@ -81,10 +85,12 @@ int	even_philos(t_philo *philo)
 {
 	int	status;
 
+	if (!not_dead(philo, philo->params))
+		return (1);
 	pthread_mutex_lock(philo->right_fork);
 	pthread_mutex_lock(philo->left_fork);
 	update_last_meal(philo);
-	printf("%ld: philo number %d is eating\n", get_time_of_day_ms() - philo->params->start_time, philo->id);
+	writer(philo, 0);
 	status = ft_usleep(philo->params->time_to_eat, philo);
 	pthread_mutex_unlock(philo->right_fork);
 	pthread_mutex_unlock(philo->left_fork);

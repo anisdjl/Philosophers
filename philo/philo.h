@@ -6,7 +6,7 @@
 /*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 14:23:29 by adjelili          #+#    #+#             */
-/*   Updated: 2026/04/17 17:38:01 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/04/19 12:29:50 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ void	wait_all_threads(t_params *params, t_philo *philo);
 void	update_last_meal(t_philo *philo);
 int		odd_philos(t_philo *philo);
 int		even_philos(t_philo *philo);
+void	writer(t_philo *philo, int n);
 
 #endif

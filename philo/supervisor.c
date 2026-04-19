@@ -6,7 +6,7 @@
 /*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 14:52:29 by adjelili          #+#    #+#             */
-/*   Updated: 2026/04/17 17:45:02 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/04/19 12:33:45 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	*supervisor(void *arg)
 				pthread_mutex_lock(&params->read_flag_death);
 				params->death = 1;
 				pthread_mutex_unlock(&params->read_flag_death);
-				printf("%ld: philo number %d is dead dans le supervisor\n", get_time_of_day_ms() - params->start_time, y + 1);
+				writer(&params->tab_of_philo[y], 3);
 				pthread_mutex_unlock(&params->tab_of_philo[y].last_meal);
 				return NULL;
 			}
@@ -43,4 +43,20 @@ void	*supervisor(void *arg)
 		// usleep(1000);
 	}
 	return NULL;
+}
+
+
+void	writer(t_philo *philo, int n)
+{
+	pthread_mutex_lock(&philo->params->mutex_log);
+	if (n == 0) // il mange
+		printf("%ld: philo number %d is eating\n", get_time_of_day_ms() - philo->params->start_time, philo->id);
+	else if (n == 1) // il dort
+		printf("%ld: philo number %d is sleeping\n", get_time_of_day_ms() - philo->params->start_time, philo->id);
+	else if (n == 2) // il pense
+		printf("%ld: philo number %d is thinking\n", get_time_of_day_ms() - philo->params->start_time, philo->id);
+	else if (n == 3) // il est mort
+		printf("%ld: philo number %d is dead dans le supervisor\n", get_time_of_day_ms() - philo->params->start_time, philo->id);
+	pthread_mutex_unlock(&philo->params->mutex_log);
+	return ;
 }
