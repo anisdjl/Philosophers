@@ -6,7 +6,7 @@
 /*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 14:23:29 by adjelili          #+#    #+#             */
-/*   Updated: 2026/04/19 12:29:50 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/04/19 17:33:52 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_params
 	pthread_mutex_t	read_flag_death;
 	pthread_mutex_t	*tab_of_mutex;
 	pthread_mutex_t	mutex_log;
+	pthread_mutex_t	mutex_nbom;
 	pthread_t		thread_supervisor;
 }	t_params;
 
@@ -70,5 +71,8 @@ void	update_last_meal(t_philo *philo);
 int		odd_philos(t_philo *philo);
 int		even_philos(t_philo *philo);
 void	writer(t_philo *philo, int n);
+int		one_philo(t_philo *philo);
+int		check_nbom(t_philo *philo);
+int		check_nbom_supervisor(t_params *params);
 
 #endif

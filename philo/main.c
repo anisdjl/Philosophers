@@ -6,7 +6,7 @@
 /*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 14:25:04 by adjelili          #+#    #+#             */
-/*   Updated: 2026/04/17 16:14:39 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/04/19 17:28:47 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int main(int argc, char **argv)
 	init_mutex(params);
 	init_philo(params, &philos);
 	launch_threads(philos, params);
-	// launch_supervisor(params);
 	wait_all_threads(params, philos);
 	ft_free_all_malloc();
 	return (0);
@@ -44,24 +43,19 @@ void	init_philo(t_params *params, t_philo **philos)
 	y = 0;
 	start_time = get_time_of_day_ms();
 	*philos = ft_malloc(1, sizeof(t_philo) * params->nb_philo);
-	// printf("nb of philo %d\n", params->nb_philo);
 	while (y < params->nb_philo)
 	{
-		//philos[y] = ft_malloc(1, sizeof(t_philo));
 		(*philos)[y].id = y + 1;
 		init_forks((*philos + y), params);
 		(*philos)[y].params = params;
-		// printf("The philo number %d has the fork number %d at his left and the fork number %d at his right\n", y, y, (y + 1) % params->nb_philo);
 		if (pthread_mutex_init(&(*philos)[y].last_meal, NULL) != 0)
 		{
 			ft_free_all_malloc();
 			exit(EXIT_FAILURE);
 		}
-		//printf("right fork: %p | left fork: %p\n", (*philos)[y].right_fork, (*philos)[y].left_fork);
 		(*philos)[y].number_of_meal = 0;
 		(*philos)[y].time_lm = start_time;
 		y++;
-		// printf("%d\n", y);
 	}
 	params->tab_of_philo = *philos;
 }
@@ -80,7 +74,6 @@ void	init_mutex(t_params *params)
 	params->tab_of_mutex = ft_malloc(1, sizeof(pthread_mutex_t) * (params->nb_philo));
 	while (y < params->nb_philo)
 	{
-		// params->tab_of_mutex[y] = ft_malloc(1, sizeof(pthread_mutex_t));
 		if (pthread_mutex_init(&params->tab_of_mutex[y], NULL) != 0)
 		{
 			ft_free_all_malloc();
@@ -88,23 +81,28 @@ void	init_mutex(t_params *params)
 		}
 		y++;
 	}
-	pthread_mutex_init(&params->mutex_log, NULL);
+	if (pthread_mutex_init(&params->mutex_log, NULL) != 0 || pthread_mutex_init(&params->mutex_nbom, NULL) != 0)
+	{
+		ft_free_all_malloc();
+		exit(EXIT_FAILURE);
+	}
+	if (pthread_mutex_init(&params->read_flag_death, NULL) != 0)
+	{
+		ft_free_all_malloc();
+		exit(EXIT_FAILURE);
+	}
 }
 
 void	init_struct(t_params *params, int argc, char **argv)
 {
 	params->nb_philo = ft_atoi(argv[1]);
-	// printf("%d\n", params->nb_philo);
 	params->time_to_die = ft_atoi(argv[2]);
-	// printf("%d\n", params->time_to_die);
 	params->time_to_eat = ft_atoi(argv[3]);
-	// printf("%d\n", params->time_to_eat);
 	params->time_to_sleep = ft_atoi(argv[4]);
-	// printf("%d\n", params->time_to_sleep);
 	if (argc == 6)
 		params->notepme = ft_atoi(argv[5]);
 	else
-		params->notepme = -1; // je le mets a -1 comme ca je pourrais chcecker si il y a un notepme sino nje n'arrete pas la simulation
+		params->notepme = -1;
 	if (pthread_mutex_init(&params->mutex_log, NULL) != 0)
 	{
 		ft_free_all_malloc();

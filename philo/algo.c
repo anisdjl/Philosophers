@@ -6,7 +6,7 @@
 /*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 11:18:33 by anis              #+#    #+#             */
-/*   Updated: 2026/04/19 13:51:37 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/04/19 17:34:04 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ void	*algo(void *arg)
 		usleep(500);
 	while (1)
 	{
-		if (!not_dead(philo, philo->params) || (philo->params->notepme > 0
-			&& philo->number_of_meal == philo->params->notepme))
+		if (!not_dead(philo, philo->params) || check_nbom(philo))
 			break ;
 		if (philo->id % 2 == 0)
 			status = even_philos(philo);
@@ -69,15 +68,59 @@ int	odd_philos(t_philo *philo)
 {
 	int status;
 
+	if (philo->params->nb_philo == 1)
+		return (one_philo(philo));
 	if (!not_dead(philo, philo->params))
 		return (1);
 	pthread_mutex_lock(philo->left_fork);
+	if (!not_dead(philo, philo->params))
+	{
+		pthread_mutex_unlock(philo->left_fork);
+		return (1);
+	}
+	writer(philo, 4);
 	pthread_mutex_lock(philo->right_fork);
 	update_last_meal(philo);
+	if (!not_dead(philo, philo->params))
+	{
+		pthread_mutex_unlock(philo->left_fork);
+		pthread_mutex_unlock(philo->right_fork);	
+		return (1);
+	}
+	writer(philo, 4);
 	writer(philo, 0);
 	status = ft_usleep(philo->params->time_to_eat, philo);
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
+	return (status);
+}
+
+int	one_philo(t_philo *philo)
+{
+	int status;
+
+	if (!not_dead(philo, philo->params))
+		return (1);
+	pthread_mutex_lock(philo->left_fork);
+	if (!not_dead(philo, philo->params))
+	{
+		pthread_mutex_unlock(philo->left_fork);
+		return (1);
+	}
+	writer(philo, 4);
+	// pthread_mutex_lock(philo->right_fork);
+	// update_last_meal(philo);
+	if (!not_dead(philo, philo->params))
+	{
+		pthread_mutex_unlock(philo->left_fork);
+		// pthread_mutex_unlock(philo->right_fork);	
+		return (1);
+	}
+	writer(philo, 4);
+	// writer(philo, 0);
+	status = ft_usleep(philo->params->time_to_eat, philo);
+	pthread_mutex_unlock(philo->left_fork);
+	// pthread_mutex_unlock(philo->right_fork);
 	return (status);
 }
 
@@ -88,8 +131,21 @@ int	even_philos(t_philo *philo)
 	if (!not_dead(philo, philo->params))
 		return (1);
 	pthread_mutex_lock(philo->right_fork);
+	if (!not_dead(philo, philo->params))
+	{
+		pthread_mutex_unlock(philo->right_fork);
+		return (1);
+	}
+	writer(philo, 4);
 	pthread_mutex_lock(philo->left_fork);
 	update_last_meal(philo);
+	if (!not_dead(philo, philo->params))
+	{
+		pthread_mutex_unlock(philo->right_fork);
+		pthread_mutex_unlock(philo->left_fork);
+		return (1);
+	}
+	writer(philo, 4);
 	writer(philo, 0);
 	status = ft_usleep(philo->params->time_to_eat, philo);
 	pthread_mutex_unlock(philo->right_fork);
