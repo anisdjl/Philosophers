@@ -6,13 +6,12 @@
 #    By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/14 14:17:57 by adjelili          #+#    #+#              #
-#    Updated: 2026/04/20 11:19:23 by adjelili         ###   ########.fr        #
+#    Updated: 2026/04/20 14:59:16 by adjelili         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 CFLAGS = -g -Wall -Werror -Wextra
-LDFLAGS=-fsanitize=thread
 NAME = philo
 
 SRC = main.c \

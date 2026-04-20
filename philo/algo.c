@@ -6,7 +6,7 @@
 /*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 11:18:33 by anis              #+#    #+#             */
-/*   Updated: 2026/04/20 10:52:40 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/04/20 15:47:45 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ void	*algo(void *arg)
 			break ;
 		if (!not_dead(philo, philo->params))
 			break ;
+		(writer(philo, 2), (philo->number_of_meal += 1));
 		ft_usleep(((philo->params->time_to_die - (philo->params->time_to_eat
 						+ philo->params->time_to_sleep)) / 2), philo);
-		(writer(philo, 2), (philo->number_of_meal += 1));
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 14:52:29 by adjelili          #+#    #+#             */
-/*   Updated: 2026/04/20 11:39:29 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/04/20 15:01:57 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,19 +86,19 @@ void	writer(t_philo *philo, int n)
 {
 	pthread_mutex_lock(&philo->params->mutex_log);
 	if (n == 0)
-		printf("%ld: philo number %d is eating\n",
+		printf("%ldms: philo number %d is eating\n",
 			get_time_of_day_ms() - philo->params->start_time, philo->id);
 	else if (n == 1)
-		printf("%ld: philo number %d is sleeping\n",
+		printf("%ldms: philo number %d is sleeping\n",
 			get_time_of_day_ms() - philo->params->start_time, philo->id);
 	else if (n == 2)
-		printf("%ld: philo number %d is thinking\n",
+		printf("%ldms: philo number %d is thinking\n",
 			get_time_of_day_ms() - philo->params->start_time, philo->id);
 	else if (n == 3)
-		printf("%ld: philo number %d died\n",
+		printf("%ldms: philo number %d died\n",
 			get_time_of_day_ms() - philo->params->start_time, philo->id);
 	else if (n == 4)
-		printf("%ld: philo number %d has taken a fork\n",
+		printf("%ldms: philo number %d has taken a fork\n",
 			get_time_of_day_ms() - philo->params->start_time, philo->id);
 	pthread_mutex_unlock(&philo->params->mutex_log);
 	return ;
