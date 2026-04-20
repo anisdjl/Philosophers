@@ -6,29 +6,15 @@
 /*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 15:30:04 by adjelili          #+#    #+#             */
-/*   Updated: 2026/04/17 17:42:07 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/04/20 11:01:26 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-
 int	not_dead(t_philo *philo, t_params *params)
 {
 	(void)philo;
-	// c'est lui qui verifie si le philo est encore ne vie
-	// long	difference;
-	// long	actual_time;
-
-	// actual_time = get_time_of_day_ms();
-	// difference = time_last_meal(actual_time, philo);
-	// if (difference > params->time_to_die)
-	// {
-	// 	printf("%ld: philo numeber %d is dead\n", get_time_of_day_ms(), philo->id);
-	// 	return (0);
-	// }
-	// else
-	// 	return (1);
 	pthread_mutex_lock(&params->read_flag_death);
 	if (params->death == 1)
 	{
@@ -53,7 +39,7 @@ long	get_time_of_day_ms(void)
 long	time_last_meal(int time, t_philo *philo)
 {
 	long	difference;
-	
+
 	pthread_mutex_lock(&philo->last_meal);
 	difference = time - philo->time_lm;
 	pthread_mutex_unlock(&philo->last_meal);
@@ -65,12 +51,12 @@ int	ft_usleep(int time_to_sleep, t_philo *philo)
 	long	target;
 
 	target = get_time_of_day_ms() + time_to_sleep;
-	while(get_time_of_day_ms() < target)
+	while (get_time_of_day_ms() < target)
 	{
 		pthread_mutex_lock(&philo->params->read_flag_death);
 		if (philo->params->death == 1)
 		{
-			pthread_mutex_unlock(&philo->params->read_flag_death);	
+			pthread_mutex_unlock(&philo->params->read_flag_death);
 			return (1);
 		}
 		pthread_mutex_unlock(&philo->params->read_flag_death);
@@ -82,7 +68,7 @@ int	ft_usleep(int time_to_sleep, t_philo *philo)
 void	wait_all_threads(t_params *params, t_philo *philo)
 {
 	int	y;
-	
+
 	y = 0;
 	while (y < params->nb_philo)
 	{

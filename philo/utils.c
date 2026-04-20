@@ -6,7 +6,7 @@
 /*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 12:23:54 by adjelili          #+#    #+#             */
-/*   Updated: 2026/04/14 11:35:28 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/04/20 10:34:11 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ int	test_digit(int argc, char **argv)
 
 int	test_num(int argc, char **argv)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	while (i < argc)
 	{
 		if (!test_digit(argc, argv) || ft_atoi(argv[i]) <= 0)
 		{
-			printf("invalid arguments\n");	
+			printf("invalid arguments\n");
 			return (0);
 		}
 		else

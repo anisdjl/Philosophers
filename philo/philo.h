@@ -6,7 +6,7 @@
 /*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 14:23:29 by adjelili          #+#    #+#             */
-/*   Updated: 2026/04/19 17:33:52 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/04/20 10:53:36 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <stdint.h>
 # include "gc.h"
 
-typedef struct s_philo t_philo;
+typedef struct s_philo	t_philo;
 
 typedef struct s_params
 {
@@ -42,14 +42,14 @@ typedef struct s_params
 
 typedef struct s_philo
 {
-	int	id;
-	long	time_lm;
+	int				id;
+	long			time_lm;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*left_fork;
-	pthread_mutex_t last_meal;
-	pthread_t	thread;
-	t_params	*params;
-	int			number_of_meal;
+	pthread_mutex_t	last_meal;
+	pthread_t		thread;
+	t_params		*params;
+	int				number_of_meal;
 }	t_philo;
 
 int		ft_isdigit(int c);

@@ -6,13 +6,13 @@
 /*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 14:25:04 by adjelili          #+#    #+#             */
-/*   Updated: 2026/04/19 17:28:47 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/04/20 10:55:12 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_params	*params;
 	t_philo		*philos;
@@ -37,7 +37,7 @@ int main(int argc, char **argv)
 
 void	init_philo(t_params *params, t_philo **philos)
 {
-	int y;
+	int		y;
 	long	start_time;
 
 	y = 0;
@@ -69,9 +69,10 @@ void	init_forks(t_philo *philo, t_params *params)
 void	init_mutex(t_params *params)
 {
 	int	y;
-	
+
 	y = 0;
-	params->tab_of_mutex = ft_malloc(1, sizeof(pthread_mutex_t) * (params->nb_philo));
+	params->tab_of_mutex = ft_malloc(1, sizeof(pthread_mutex_t)
+			* (params->nb_philo));
 	while (y < params->nb_philo)
 	{
 		if (pthread_mutex_init(&params->tab_of_mutex[y], NULL) != 0)
@@ -81,7 +82,8 @@ void	init_mutex(t_params *params)
 		}
 		y++;
 	}
-	if (pthread_mutex_init(&params->mutex_log, NULL) != 0 || pthread_mutex_init(&params->mutex_nbom, NULL) != 0)
+	if (pthread_mutex_init(&params->mutex_log, NULL) != 0
+		|| pthread_mutex_init(&params->mutex_nbom, NULL) != 0)
 	{
 		ft_free_all_malloc();
 		exit(EXIT_FAILURE);
