@@ -1,4 +1,4 @@
-*This project has been created as part of the 42 curriculum by <adjelili>.*
+*This project has been created as part of the 42 curriculum by adjelili*
  
 # 🍝 Philosophers
  
@@ -84,7 +84,7 @@ make re       # Recompile from scratch
 - [Valgrind + Helgrind for thread debugging](https://valgrind.org/docs/manual/hg-manual.html)
 ### AI Usage
  
-AI (Claude by Anthropic) was used during this project for the following purposes:
+AI was used during this project for the following purposes:
  
 - **Understanding concepts**: Clarifying the difference between mutexes and semaphores, and how to reason about deadlock prevention strategies.
 - **Debugging**: Helping identify potential data races and discussing memory model behavior in multithreaded programs.
