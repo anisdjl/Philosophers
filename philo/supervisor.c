@@ -6,20 +6,20 @@
 /*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 14:52:29 by adjelili          #+#    #+#             */
-/*   Updated: 2026/04/20 11:04:00 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/04/20 11:39:29 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	unlock_supervisor(t_params *params, int y)
+void	unlock_supervisor(t_params *params, int y)
 {
 	pthread_mutex_lock(&params->read_flag_death);
 	params->death = 1;
 	pthread_mutex_unlock(&params->read_flag_death);
 	writer(&params->tab_of_philo[y], 3);
 	pthread_mutex_unlock(&params->tab_of_philo[y].last_meal);
-	return (NULL);
+	return ;
 }
 
 void	*supervisor(void *arg)
@@ -34,7 +34,7 @@ void	*supervisor(void *arg)
 		y = 0;
 		while (y < params->nb_philo)
 		{
-			if (check_nbom_supervisor(params))
+			if (!check_nbom_supervisor(params))
 				return (NULL);
 			pthread_mutex_lock(&params->tab_of_philo[y].last_meal);
 			if (get_time_of_day_ms() - params->tab_of_philo[y].time_lm
