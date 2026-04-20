@@ -6,7 +6,7 @@
 /*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 14:23:29 by adjelili          #+#    #+#             */
-/*   Updated: 2026/04/20 11:28:32 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/04/20 16:46:03 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,6 @@ int		one_philo(t_philo *philo);
 int		check_nbom(t_philo *philo);
 int		check_nbom_supervisor(t_params *params);
 void	unlock_supervisor(t_params *params, int y);
+void	*reached_nbom(t_params *params, int y);
 
 #endif

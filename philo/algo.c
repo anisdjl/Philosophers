@@ -6,7 +6,7 @@
 /*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 11:18:33 by anis              #+#    #+#             */
-/*   Updated: 2026/04/20 15:47:45 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/04/20 16:54:12 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	*algo(void *arg)
 		usleep(500);
 	while (1)
 	{
-		if (!not_dead(philo, philo->params) || check_nbom(philo))
+		if (!not_dead(philo, philo->params))
 			break ;
 		status = manage_odd_even(philo);
 		if (status == 0 && not_dead(philo, philo->params))

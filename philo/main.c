@@ -6,7 +6,7 @@
 /*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 14:25:04 by adjelili          #+#    #+#             */
-/*   Updated: 2026/04/20 10:55:12 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/04/20 16:28:29 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,11 +105,6 @@ void	init_struct(t_params *params, int argc, char **argv)
 		params->notepme = ft_atoi(argv[5]);
 	else
 		params->notepme = -1;
-	if (pthread_mutex_init(&params->mutex_log, NULL) != 0)
-	{
-		ft_free_all_malloc();
-		exit(EXIT_FAILURE);
-	}
 	params->start_time = get_time_of_day_ms();
 	params->death = 0;
 }

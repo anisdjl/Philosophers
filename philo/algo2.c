@@ -6,7 +6,7 @@
 /*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/20 10:40:05 by adjelili          #+#    #+#             */
-/*   Updated: 2026/04/20 10:42:25 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/04/20 16:58:56 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,13 @@ int	even_philos(t_philo *philo)
 	pthread_mutex_unlock(philo->right_fork);
 	pthread_mutex_unlock(philo->left_fork);
 	return (status);
+}
+
+void	*reached_nbom(t_params *params, int y)
+{
+	pthread_mutex_lock(&params->read_flag_death);
+	params->death = 1;
+	pthread_mutex_unlock(&params->read_flag_death);
+	pthread_mutex_unlock(&params->tab_of_philo[y].last_meal);
+	return (NULL);
 }

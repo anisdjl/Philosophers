@@ -6,7 +6,7 @@
 /*   By: adjelili <adjelili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 14:52:29 by adjelili          #+#    #+#             */
-/*   Updated: 2026/04/20 15:01:57 by adjelili         ###   ########.fr       */
+/*   Updated: 2026/04/20 16:44:46 by adjelili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void	*supervisor(void *arg)
 		y = 0;
 		while (y < params->nb_philo)
 		{
-			if (!check_nbom_supervisor(params))
-				return (NULL);
 			pthread_mutex_lock(&params->tab_of_philo[y].last_meal);
+			if (!check_nbom_supervisor(params))
+				return (reached_nbom(params, y), NULL);
 			if (get_time_of_day_ms() - params->tab_of_philo[y].time_lm
 				> params->time_to_die)
 			{
@@ -86,19 +86,19 @@ void	writer(t_philo *philo, int n)
 {
 	pthread_mutex_lock(&philo->params->mutex_log);
 	if (n == 0)
-		printf("%ldms: philo number %d is eating\n",
+		printf("%ld %d is eating\n",
 			get_time_of_day_ms() - philo->params->start_time, philo->id);
 	else if (n == 1)
-		printf("%ldms: philo number %d is sleeping\n",
+		printf("%ld %d is sleeping\n",
 			get_time_of_day_ms() - philo->params->start_time, philo->id);
 	else if (n == 2)
-		printf("%ldms: philo number %d is thinking\n",
+		printf("%ld %d is thinking\n",
 			get_time_of_day_ms() - philo->params->start_time, philo->id);
 	else if (n == 3)
-		printf("%ldms: philo number %d died\n",
+		printf("%ld %d died\n",
 			get_time_of_day_ms() - philo->params->start_time, philo->id);
 	else if (n == 4)
-		printf("%ldms: philo number %d has taken a fork\n",
+		printf("%ld %d has taken a fork\n",
 			get_time_of_day_ms() - philo->params->start_time, philo->id);
 	pthread_mutex_unlock(&philo->params->mutex_log);
 	return ;
